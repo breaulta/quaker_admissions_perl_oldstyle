@@ -1,0 +1,5 @@
+run sqlstart.sh start to start
+run sqlstart.sh stop to stop
+
+more info at https://www.58bits.com/blog/2020/05/03/installing-mysql-80-under-wsl-2-and-ubuntu
+
