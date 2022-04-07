@@ -2,29 +2,27 @@
 use strict;
 use warnings;
 
-use CGI qw(:standard escapeHTML);
 use DBI;
-
-my $fname = CGI::escapeHTML(param('first_name'));
-my $lname = CGI::escapeHTML(param('last_name'));
 
 my $db_username = 'test';
 my $db_pw = 'quakeradmin';
 my $db_admiss = 'admissions';
 my $db_table = 'admiss';
 my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-$dbh->do("INSERT INTO $db_table (first_name, last_name) VALUES (?, ?)", undef, $fname, $lname);
-
-
-my $filename = 'output.txt';
-open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
-print $fh "First name: $fname";
-print $fh "Last name: $lname";
-close $fh;
-
-my $q = new CGI;
-
-my $html_line = "<p>You have successfully applied.</p>";
+my $query = "SELECT first_name, last_name FROM $db_table";
+#statement handle object
+my $sth = $dbh->prepare($query);
+$sth->execute();
+#array of 2 deep arrays
+my @student_apps;
+while( my $row = $sth->fetchrow_hashref ){
+	push(@student_apps, [ $row->{first_name}, $row->{last_name} ]);
+}
+my $appslist_html = "<p>first name | last name</p>";
+foreach my $app_row (@student_apps){
+	$appslist_html .= "<br><p>@$app_row[0] | @$app_row[1]</p>";
+}
+#my $html_line = "<p> this is a line of html programmically inserted </p>";
 
 #qq is the same as double quotes: ""
 my $html_template = qq{
@@ -35,8 +33,7 @@ my $html_template = qq{
 <body>
 <h1>Welcome to Phoenix Friend School Admissions</h1>
 <h2>perl test</h2>
-$html_line
-<p>next line</p>
+$appslist_html
 <br>
 
 </body>
