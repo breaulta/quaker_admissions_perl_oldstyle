@@ -22,7 +22,7 @@ my $appslist_html = "<p>first name | last name</p>";
 foreach my $app_row (@student_apps){
 	#$appslist_html .= "<br><p>@$app_row[0] | @$app_row[1]</p>";
 	$appslist_html .= "<p>@$app_row[1] | @$app_row[2] ";
-	$appslist_html .= "<button type='button' id='edit_@$app_row[0]' onclick='edit_applicant()'>Edit</button></p>";
+	$appslist_html .= "<button type='button' id='edit_@$app_row[0]' onclick='edit_applicant(@$app_row[0])'>Edit</button></p>";
 }
 #my $html_line = "<p> this is a line of html programmically inserted </p>";
 

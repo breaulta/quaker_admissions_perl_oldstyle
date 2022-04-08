@@ -2,9 +2,10 @@
 use strict;
 use warnings;
 
-use CGI qw(:standard escapeHTML);
 use DBI;
+use CGI qw(:standard escapeHTML);
 
+my $posting_id = CGI::escapeHTML(param('posting_id'));
 my $fname = CGI::escapeHTML(param('first_name'));
 my $lname = CGI::escapeHTML(param('last_name'));
 
@@ -13,18 +14,13 @@ my $db_pw = 'quakeradmin';
 my $db_admiss = 'admissions';
 my $db_table = 'admiss';
 my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-$dbh->do("INSERT INTO $db_table (first_name, last_name) VALUES (?, ?)", undef, $fname, $lname);
+#my $query = "SELECT posting_id, first_name, last_name FROM $db_table";
+my $query = "UPDATE $db_table SET first_name = '$fname', last_name = '$lname' WHERE posting_id = $posting_id";
+#statement handle object
+my $sth = $dbh->prepare($query);
+$sth->execute();
 
-
-my $filename = 'output.txt';
-open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
-print $fh "First name: $fname";
-print $fh "Last name: $lname";
-close $fh;
-
-my $q = new CGI;
-
-my $html_line = "<p>You have successfully applied.</p>";
+my $html_line = "<p>You have successfully updated the application.</p>";
 
 #qq is the same as double quotes: ""
 my $html_template = qq{
