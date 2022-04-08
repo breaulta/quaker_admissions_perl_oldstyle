@@ -34,9 +34,7 @@ my $html_template = qq{
 <meta content="utf-8" http-equiv="encoding">
 <body>
 <h1>Welcome to Phoenix Friend School Admissions</h1>
-<h2>perl test</h2>
 $html_line
-<p>next line</p>
 <br>
 
 </body>
