@@ -6,11 +6,33 @@
 <h1>Welcome to Phoenix Friend School Admissions</h1>
 <h2>Administration Site. Please choose an option below.</h2>
 <br>
-<p><a href="./cgi-bin/list_all_applicants.pl">List all applicants</a></p>
+<button type='button' id='list_all_button' onclick='list_all_applicants()' >List all Applicants</button>
+<form action='./cgi-bin/search_applicant.pl' method='post'>
+	<label for='search_last_name'>Search for student (last name):</label>
+	<input type='text' id='search_last_name' name='search_last_name'></input>
+	<input type='submit' value='Submit'>
+</form>
 
-</body>
+<div id='received'></div>
+
 <script>
 
+function list_all_applicants(){
+    var xmlHttpReq = false;
+    xmlHttpReq = new XMLHttpRequest();
+    xmlHttpReq.open('POST', '/cgi-bin/list_all_applicants.pl', true);
+    xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlHttpReq.onreadystatechange = function() {
+            if (xmlHttpReq.readyState == 4) {
+				console.log("response:");
+				console.log(xmlHttpReq.responseText);
+				response = xmlHttpReq.responseText;
+				document.getElementById("received").innerHTML = response;
+            }
+        }
+    xmlHttpReq.send();
+}
 </script>
 
+</body>
 </html>
