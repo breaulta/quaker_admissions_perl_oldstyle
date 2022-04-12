@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<body>
+<h1>Welcome to Phoenix Friend School Admissions</h1>
+<h2>Setup admin password below:</h2>
+
+<button type='button' id='gen' onclick='gen_admin()'>Submit</button>
+<br>
+<form action="/cgi-bin/auth.pl">
+  <label for="username">username:</label><br>
+  <input type="text" id="username" name="username" value=""><br>
+  <label for="salt">salt:</label><br>
+  <input type="text" id="salt" name="salt" value=""><br>
+  <label for="password">password:</label><br>
+  <input type="text" id="password" name="password" value=""><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+</body>
+<script src="crypto.js"></script>
+<script>
+
+async function gen_admin(){
+	//Will need to eventually check if username exists
+
+	let pwd = document.getElementById('password').value;
+	let username = document.getElementById('username').value;
+	console.log('raw pw: ' + pwd);
+
+	//generate salt - hardcode for testing first value
+	//let salt = (salt generator)
+	let salt = 'salt';
+	//let salt = '6&c#KGc';
+	
+	const pwd_buffer = new TextEncoder().encode(pwd);
+	await crypto.subtle.digest('SHA-256', pwd_buffer).then((hashed_pw_buf) => {
+
+		let hashed_pw_hex = buf2hex(hashed_pw_buf);
+		console.log('hashed pw: ' + hashed_pw_hex);
+		document.getElementById('password').value = hashed_pw_hex;
+		//let form_data = 'username=' + username + '&salt=' + salt;// + '&pw=' + hashed_pw_hex;
+		//console.log('data sent to perl: ' + form_data);
+		//forward_to_perl(form_data);
+	});
+}
+
+//send data to perl using POST
+async function forward_to_perl(data){
+    var xmlHttpReq = false;
+    xmlHttpReq = new XMLHttpRequest();
+    xmlHttpReq.open('POST', '/cgi-bin/auth.pl', true);
+    //xmlHttpReq.setRequestHeader('Content-Type', 'text/plain');
+    xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlHttpReq.onreadystatechange = function() {
+            if (xmlHttpReq.readyState == 4) {
+                console.log("response:");
+                console.log(xmlHttpReq.responseText);
+                response = xmlHttpReq.responseText;
+                //document.getElementById("received").innerHTML = response;
+            }
+        }
+    xmlHttpReq.send();
+
+
+}
+
+</script>
+
+</html>
