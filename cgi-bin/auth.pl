@@ -4,12 +4,19 @@ use warnings;
 
 use DBI;
 use CGI qw(:standard escapeHTML);
+use URI::Escape;
+use Digest::SHA qw(sha256_hex);
 
 my $username = CGI::escapeHTML(param('username'));
 my $salt = CGI::escapeHTML(param('salt'));
-my $password = CGI::escapeHTML(param('pw'));
+my $password = CGI::escapeHTML(param('password'));
 
-#my $capture = <STDIN>;
+$username = uri_unescape( $username );
+$salt = uri_unescape( $salt );
+$password = uri_unescape( $password );
+
+my $concat = $password . $salt;
+my $doublesha = sha256_hex($concat);
 
 my $db_username = 'test';
 my $db_pw = 'quakeradmin';
@@ -25,7 +32,7 @@ open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
 print $fh "\nusername: $username";
 print $fh "\nsalt: $salt";
 print $fh "\npassword: $password";
-#print $fh "$capture";
+print $fh "\ndouble sha: $doublesha";
 close $fh;
 
 #my $q = new CGI;
