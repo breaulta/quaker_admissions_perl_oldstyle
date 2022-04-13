@@ -11,9 +11,9 @@ my $lname = CGI::escapeHTML(param('last_name'));
 my $db_username = 'test';
 my $db_pw = 'quakeradmin';
 my $db_admiss = 'admissions';
-my $db_table = 'admiss';
+my $db_table_applications = 'applications';
 my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-$dbh->do("INSERT INTO $db_table (first_name, last_name) VALUES (?, ?)", undef, $fname, $lname);
+$dbh->do("INSERT INTO $db_table_applications (first_name, last_name) VALUES (?, ?)", undef, $fname, $lname);
 
 
 my $filename = 'output.txt';

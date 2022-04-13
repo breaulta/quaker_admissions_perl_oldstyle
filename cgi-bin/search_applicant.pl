@@ -10,10 +10,10 @@ my $lname = CGI::escapeHTML(param('search_last_name'));
 my $db_username = 'test';
 my $db_pw = 'quakeradmin';
 my $db_admiss = 'admissions';
-my $db_table = 'admiss';
+my $db_table_applications = 'applications';
 my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-#my $query = "SELECT first_name, last_name FROM $db_table";
-my $query = "SELECT * FROM $db_table WHERE last_name REGEXP '$lname'";
+#my $query = "SELECT first_name, last_name FROM $db_table_applications";
+my $query = "SELECT * FROM $db_table_applications WHERE last_name REGEXP '$lname'";
 #statement handle object
 my $sth = $dbh->prepare($query);
 $sth->execute();

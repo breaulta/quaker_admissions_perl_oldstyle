@@ -5,17 +5,17 @@ use warnings;
 use DBI;
 use CGI qw(:standard escapeHTML);
 
-my $posting_id = CGI::escapeHTML(param('posting_id'));
+my $student_id = CGI::escapeHTML(param('student_id'));
 my $fname = CGI::escapeHTML(param('first_name'));
 my $lname = CGI::escapeHTML(param('last_name'));
 
 my $db_username = 'test';
 my $db_pw = 'quakeradmin';
 my $db_admiss = 'admissions';
-my $db_table = 'admiss';
+my $db_table_applications = 'applications';
 my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-#my $query = "SELECT posting_id, first_name, last_name FROM $db_table";
-my $query = "UPDATE $db_table SET first_name = '$fname', last_name = '$lname' WHERE posting_id = $posting_id";
+#my $query = "SELECT student_id, first_name, last_name FROM $db_table_applications";
+my $query = "UPDATE $db_table_applications SET first_name = '$fname', last_name = '$lname' WHERE student_id = $student_id";
 #statement handle object
 my $sth = $dbh->prepare($query);
 $sth->execute();
