@@ -15,7 +15,7 @@
 
 <div id='edit_div' style='display: none;'>
 	<form action='./cgi-bin/edit_applicant.pl' method='post'>
-		<input type='text' id='posting_id' name='posting_id' style='display: none;'>
+		<input type='text' id='student_id' name='student_id' style='display: none;'>
 		<label for='first_name'>First Name:</label>
 		<input type='text' id='first_name' name='first_name'>
 	<br>
@@ -47,10 +47,9 @@ function list_all_applicants(){
 }
 
 function edit_applicant(id, first_name, last_name){
+	// we know which applicant to change using the hidden student_id
 	document.getElementById('edit_div').style.display = 'inline';
-	document.getElementById('posting_id').value = id;
-	//document.getElementById('first_name').value = first_name;
-	//document.getElementById('last_name').value = last_name;
+	document.getElementById('student_id').value = id;
 	console.log('edit: ' + id);
 }
 

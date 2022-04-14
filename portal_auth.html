@@ -8,7 +8,7 @@
 
 <button type='button' id='gen' onclick='gen_sha()'>Generate Hash</button>
 <br>
-<form action="/cgi-bin/.pl">
+<form action="/cgi-bin/admin_manager.pl">
   <label for="username">username:</label><br>
   <input type="text" id="username" name="username" value=""><br>
   <label for="password">password:</label><br>
@@ -17,59 +17,21 @@
 </form> 
 
 </body>
+<script src="crypto.js"></script>
 <script>
 
 async function gen_sha(){
-	//Will need to eventually check if username exists
 
 	let pwd = document.getElementById('password').value;
-	let username = document.getElementById('username').value;
 	console.log('raw pw: ' + pwd);
-
-	let number_array = new Uint8Array(7);
-	crypto.getRandomValues(number_array);
-	console.log('number_array: ' + number_array);
-
-	let salt = btoa(String.fromCharCode.apply(null, number_array));
-	// the last 2 chars were always coming out as '==', so cut them off
-	salt = salt.slice(0, -2);
-	console.log('salt: ' + salt);
-	document.getElementById('normalsalt').value = salt;
-	
-	let salt_uriencoded = encodeURIComponent(salt);
-	document.getElementById('salt').value = salt_uriencoded;
-	
 	const pwd_buffer = new TextEncoder().encode(pwd);
-	await crypto.subtle.digest('SHA-256', pwd_buffer).then((hashed_pw_buf) => {
 
+	await crypto.subtle.digest('SHA-256', pwd_buffer).then((hashed_pw_buf) => {
 		let hashed_pw_hex = buf2hex(hashed_pw_buf);
 		console.log('hashed pw: ' + hashed_pw_hex);
 		document.getElementById('password').value = hashed_pw_hex;
-		//let form_data = 'username=' + username + '&salt=' + salt;// + '&pw=' + hashed_pw_hex;
-		//console.log('data sent to perl: ' + form_data);
-		//forward_to_perl(form_data);
 	});
 	document.getElementById('form_submit').style.display = 'inline';
-}
-
-//send data to perl using POST
-async function forward_to_perl(data){
-    var xmlHttpReq = false;
-    xmlHttpReq = new XMLHttpRequest();
-    xmlHttpReq.open('POST', '/cgi-bin/admin_manager.pl.pl', true);
-    //xmlHttpReq.setRequestHeader('Content-Type', 'text/plain');
-    xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xmlHttpReq.onreadystatechange = function() {
-            if (xmlHttpReq.readyState == 4) {
-                console.log("response:");
-                console.log(xmlHttpReq.responseText);
-                response = xmlHttpReq.responseText;
-                //document.getElementById("received").innerHTML = response;
-            }
-        }
-    xmlHttpReq.send();
-
-
 }
 
 </script>

@@ -44,15 +44,15 @@ $html = qq{
 <h2>Administration Site. Please choose an option below.</h2>
 <br>
 <button type='button' id='list_all_button' onclick='list_all_applicants()' >List all Applicants</button>
-<form action='./cgi-bin/search_applicant.pl' method='post'>
+<form action='/cgi-bin/search_applicant.pl' method='post'>
     <label for='search_last_name'>Search for student (last name):</label>
     <input type='text' id='search_last_name' name='search_last_name'></input>
     <input type='submit' value='Submit'>
 </form>
 
 <div id='edit_div' style='display: none;'>
-    <form action='./cgi-bin/edit_applicant.pl' method='post'>
-        <input type='text' id='posting_id' name='posting_id' style='display: none;'>
+    <form action='/cgi-bin/edit_applicant.pl' method='post'>
+        <input type='text' id='student_id' name='student_id' style=''>
         <label for='first_name'>First Name:</label>
         <input type='text' id='first_name' name='first_name'>
     <br>
@@ -62,13 +62,49 @@ $html = qq{
         <input type='submit' value='Save'>
     </form>
 </div>
-};
 
+<div id='received'></div>
+
+<script>
+
+function list_all_applicants(){
+    var xmlHttpReq = false;
+    xmlHttpReq = new XMLHttpRequest();
+    xmlHttpReq.open('POST', '/cgi-bin/list_all_applicants.pl', true);
+    xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlHttpReq.onreadystatechange = function() {
+            if (xmlHttpReq.readyState == 4) {
+                console.log("response:");
+                console.log(xmlHttpReq.responseText);
+                response = xmlHttpReq.responseText;
+                document.getElementById("received").innerHTML = response;
+            }
+        }
+    xmlHttpReq.send();
+}
+
+function edit_applicant(id){
+    // we know which applicant to change using the hidden student_id
+    document.getElementById('edit_div').style.display = 'inline';
+    document.getElementById('student_id').value = id;
+    console.log('edit: ' + id);
+}
+
+
+</script>
+
+</body>
+</html>
+
+};
+my $doublesha;
+my $salt;
 # check if username matches computed hash
 while( my $row = $sth->fetchrow_hashref ){
 	# double sha to check against database
-	my $concat = $password . $row->{salt};
-	my $doublesha = sha256_hex($concat);
+	$salt = $row->{salt};
+	my $concat = $password . $salt;
+	$doublesha = sha256_hex($concat);
 	if( $username eq $row->{username} && $doublesha eq $row->{password_hash}){
 		print $html;
 		exit 0;
