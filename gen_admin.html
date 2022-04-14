@@ -4,11 +4,11 @@
 <meta content="utf-8" http-equiv="encoding">
 <body>
 <h1>Welcome to Phoenix Friend School Admissions</h1>
-<h2>Setup admin password below:</h2>
+<h2>Setup administration password below:</h2>
 
 <button type='button' id='gen' onclick='gen_admin()'>Generate Hash</button>
 <br>
-<form action="/cgi-bin/gen_admin.pl">
+<form action="/cgi-bin/admin_gen.pl">
   <label for="username">username:</label><br>
   <input type="text" id="username" name="username" value=""><br>
   <label for="salt">salt:</label><br>
@@ -64,7 +64,7 @@ async function gen_admin(){
 async function forward_to_perl(data){
     var xmlHttpReq = false;
     xmlHttpReq = new XMLHttpRequest();
-    xmlHttpReq.open('POST', '/cgi-bin/gen_admin.pl', true);
+    xmlHttpReq.open('POST', '/cgi-bin/admin_gen.pl', true);
     //xmlHttpReq.setRequestHeader('Content-Type', 'text/plain');
     xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xmlHttpReq.onreadystatechange = function() {
