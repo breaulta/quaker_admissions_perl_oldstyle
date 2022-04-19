@@ -22,17 +22,19 @@ $sth->execute();
 
 # add auth token to html here programmatically
 my $auth_token = 'theauthtoken';
+my $file = 'edit_response.html';
 
-print_html();
+print_auth_html($auth_token, $file);
 
-
-sub print_html {
+sub print_auth_html {
+	my $auth_t = shift;
+	my $html_file = shift;
 	# we should be in cgi-bin
-	my $html_file = 'edit_response.html';
     print "Content-type: text/html\n\n";
     open HTML, "$html_file" or die "I just can't open $html_file";
     while (my $line = <HTML>) {
-		$line =~ s/(id=\"auth_token\") /$1 name=\"auth_token\" value=\"$auth_token\"/;
+		$line =~ s/(id=\"auth_token\") /$1 name=\"auth_token\" value=\"$auth_t\"/;
         print $line;
     }
+	exit 0;
 }

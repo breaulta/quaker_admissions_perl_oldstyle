@@ -9,12 +9,14 @@
 <button type='button' id='list_all_button' onclick='list_all_applicants()' >List all Applicants</button>
 <form action='/cgi-bin/search_applicant.pl' method='post'>
 	<label for='search_last_name'>Search for student (last name):</label>
+	<input type="hidden" style="display: none;" id="auth_token" >
 	<input type='text' id='search_last_name' name='search_last_name'></input>
 	<input type='submit' value='Submit'>
 </form>
 
 <div id='edit_div' style='display: none;'>
 	<form action='/cgi-bin/edit_applicant.pl' method='post'>
+		<input type="hidden" style="display: none;" id="auth_token" >
 		<input type='text' id='student_id' name='student_id' style=''>
 		<label for='first_name'>First Name:</label>
 		<input type='text' id='first_name' name='first_name'>
