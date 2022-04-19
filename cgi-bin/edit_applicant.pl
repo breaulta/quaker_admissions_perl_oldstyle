@@ -35,6 +35,4 @@ sub print_html {
 		$line =~ s/(id=\"auth_token\") /$1 name=\"auth_token\" value=\"$auth_token\"/;
         print $line;
     }
-
-
 }
