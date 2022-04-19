@@ -20,11 +20,21 @@ my $query = "UPDATE $db_table_applications SET first_name = '$fname', last_name 
 my $sth = $dbh->prepare($query);
 $sth->execute();
 
-my $html_line = "<p>You have successfully updated the application.</p>";
+# add auth token to html here programmatically
+my $auth_token = 'theauthtoken';
 
-#qq is the same as double quotes: ""
-my $html_template = qq{
-$html_line
-};
+print_html();
 
-print $html_template;
+
+sub print_html {
+	# we should be in cgi-bin
+	my $html_file = 'edit_response.html';
+    print "Content-type: text/html\n\n";
+    open HTML, "$html_file" or die "I just can't open $html_file";
+    while (my $line = <HTML>) {
+		$line =~ s/(id=\"auth_token\") /$1 name=\"auth_token\" value=\"$auth_token\"/;
+        print $line;
+    }
+
+
+}

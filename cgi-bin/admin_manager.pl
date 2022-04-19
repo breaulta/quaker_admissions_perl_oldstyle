@@ -7,16 +7,20 @@ use CGI qw(:standard escapeHTML);
 use URI::Escape;
 use Digest::SHA qw(sha256_hex);
 
+# Catch auth token
+my $auth_token = CGI::escapeHTML(param('auth_token'));
+
 #Catch data sent from html
 my $username = CGI::escapeHTML(param('username'));
 my $password = CGI::escapeHTML(param('password'));
 
 # Decode data
+$auth_token = uri_unescape( $auth_token );
 $username = uri_unescape( $username );
 $password = uri_unescape( $password );
 
 # check if anything is empty
-my $err = "<p>Username, salt, or password are empty! Exiting...</p>";
+my $err = "<p>Username, password are empty! Exiting...</p>";
 my $html = qq{$err};
 if($username eq '' || $password eq ''){
 	print $html;
@@ -64,8 +68,8 @@ print $fh "\npassword: $password";
 print $fh "\ndouble sha: $doublesha";
 close $fh;
 
+# session not properly authenticated
 my $html_line = "<p>ACCESS DENIED</p>";
-
 #qq is the same as double quotes: ""
 my $html_template = qq{
 $html_line
