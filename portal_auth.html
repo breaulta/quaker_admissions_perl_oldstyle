@@ -6,15 +6,15 @@
 <h1>Welcome to Phoenix Friend School Admissions</h1>
 <h2>enter username and password to enter admin site:</h2>
 
-<button type='button' id='gen' onclick='gen_sha()'>Generate Hash</button>
 <br>
-<form action="/cgi-bin/admin_manager.pl">
+<form id='auth_form' action="/cgi-bin/admin_manager.pl">
   <label for="username">username:</label><br>
   <input type="text" id="username" name="username" value=""><br>
   <label for="password">password:</label><br>
   <input type="text" id="password" name="password" value=""><br><br>
   <input id='form_submit' style='display: none;' type="submit" value="Submit">
 </form> 
+<button type='button' id='gen' onclick='gen_sha()'>Authenticate</button>
 
 </body>
 <script src="crypto.js"></script>
@@ -31,7 +31,8 @@ async function gen_sha(){
 		console.log('hashed pw: ' + hashed_pw_hex);
 		document.getElementById('password').value = hashed_pw_hex;
 	});
-	document.getElementById('form_submit').style.display = 'inline';
+	//document.getElementById('form_submit').style.display = 'inline';
+	document.getElementById('auth_form').submit();
 }
 
 </script>
