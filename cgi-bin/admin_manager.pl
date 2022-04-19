@@ -9,11 +9,14 @@ use Digest::SHA qw(sha256_hex);
 
 
 # Catch auth token
-my $auth_token = CGI::escapeHTML(param('auth_token'));
+my $auth_token = '';
+$auth_token = CGI::escapeHTML(param('auth_token'));
 
 #Catch data sent from html
-my $username = CGI::escapeHTML(param('username'));
-my $password = CGI::escapeHTML(param('password'));
+my $username = '';
+my $password = '';
+$username = CGI::escapeHTML(param('username'));
+$password = CGI::escapeHTML(param('password'));
 
 # Decode data
 $auth_token = uri_unescape( $auth_token );
@@ -102,9 +105,11 @@ print $html_template;
 
 sub generate_token{
 	my $token;
+	my $min = 65;
+	my $max = 90;
 	my @i = (0..15);
 	for(@i){
-		$token .= chr(48 + int(rand(122-48)));
+		$token .= chr($min + int(rand($max-$min)));
 	}
 	return $token;
 }
