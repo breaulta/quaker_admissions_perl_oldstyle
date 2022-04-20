@@ -66,9 +66,13 @@ if ( $auth_token ne '' ){
         <input type='submit' value='Save'>
     </form>
 </div>
-			};
-			print $appslist_html;
-			print qq{
+$appslist_html
+<form id='auth_form' action="/cgi-bin/admin_manager.pl">
+  <input type="hidden" style="display: none;" id="auth_token" value="$auth_token" name="auth_token">
+  <input type="text" style="display: none;" id="username" name="username" value="dummy">
+  <input type="text" style="display: none;" id="password" name="password" value="dummy">
+  <input id='form_submit' style='' type="submit" value="click to return to admin manager">
+</form>
 
 <script>
 function edit_applicant(id, first_name, last_name){

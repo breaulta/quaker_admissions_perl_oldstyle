@@ -74,9 +74,6 @@ $appslist_html
   <input type="text" style="display: none;" id="password" name="password" value="dummy">
   <input id='form_submit' style='' type="submit" value="click to return to admin manager">
 </form>
-            };
-            #print $appslist_html;
-            print qq{
 
 <script>
 function edit_applicant(id, first_name, last_name){
