@@ -8,13 +8,12 @@
 
 <br>
 <form id='auth_form' action="/cgi-bin/admin_manager.pl">
-  <label for="username">username:</label><br>
+  <label for="username">username:</label>
   <input type="text" id="username" name="username" value=""><br>
-  <label for="password">password:</label><br>
-  <input type="text" id="password" name="password" value=""><br><br>
-  <input id='form_submit' style='display: none;' type="submit" value="Submit">
+  <label for="password">password:</label>
+  <input type="text" id="password" name="password" value=""><br>
+  <input id='form_submit' style='' type="submit" onclick='gen_sha()' value="Submit">
 </form> 
-<button type='button' id='gen' onclick='gen_sha()'>Authenticate</button>
 
 </body>
 <script src="crypto.js"></script>
