@@ -18,7 +18,7 @@ $dbh->disconnect;
 
 # Create table to hold applications.
 $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-$dbh->do("CREATE TABLE IF NOT EXISTS $db_table_applications (student_id INT AUTO_INCREMENT, first_name VARCHAR(100), last_name VARCHAR(100), PRIMARY KEY(student_id) )");
+$dbh->do("CREATE TABLE IF NOT EXISTS $db_table_applications (student_id INT AUTO_INCREMENT, first_name VARCHAR(20), middle_name VARCHAR(20), last_name VARCHAR(20), grade VARCHAR(1), chosen_name VARCHAR(20), main_phone VARCHAR(12), address VARCHAR(50), city VARCHAR(20), zip VARCHAR(10), birthdate VARCHAR(10), birth_address VARCHAR(50), gender VARCHAR(10), guardian1_name VARCHAR(30), guardian1_phone VARCHAR(12), guardian1_address VARCHAR(50), guardian1_city VARCHAR(20), guardian1_zip VARCHAR(10), guardian1_work VARCHAR(20), guardian1_employer VARCHAR(30), guardian2_name VARCHAR(30), guardian2_phone VARCHAR(12), guardian2_address VARCHAR(50), guardian2_city VARCHAR(20), guardian2_zip VARCHAR(10), guardian2_work VARCHAR(20), guardian2_employer VARCHAR(30), prev_school1_name VARCHAR(30), prev_school1_phone VARCHAR(12), prev_school1_email VARCHAR(30), prev_school1_address VARCHAR(50), prev_school2_name VARCHAR(30), prev_school2_phone VARCHAR(12), prev_school2_email VARCHAR(30), prev_school2_address VARCHAR(50), PRIMARY KEY(student_id) )");
 $dbh->disconnect;
 
 # Create table to handle admin authorization.
