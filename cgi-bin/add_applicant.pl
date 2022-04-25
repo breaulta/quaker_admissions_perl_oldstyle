@@ -5,6 +5,7 @@ use warnings;
 use CGI qw(:standard escapeHTML);
 use URI::Escape;
 use DBI;
+use Nice::Try;
 
 my $first_name = '';
 my $middle_name = '';
@@ -115,15 +116,24 @@ my $db_username = 'test';
 my $db_pw = 'quakeradmin';
 my $db_admiss = 'admissions';
 my $db_table_applications = 'applications';
-my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-$dbh->do("INSERT INTO $db_table_applications (first_name, middle_name, last_name, grade, chosen_name, main_phone, address, city, zip, birthdate, birth_address, gender, guardian1_name, guardian1_phone, guardian1_address, guardian1_city, guardian1_zip, guardian1_work, guardian1_employer, guardian2_name, guardian2_phone, guardian2_address, guardian2_city, guardian2_zip, guardian2_work, guardian2_employer, prev_school1_name, prev_school1_phone, prev_school1_email, prev_school1_address, prev_school2_name, prev_school2_phone, prev_school2_email, prev_school2_address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", undef, $first_name, $middle_name, $last_name, $grade, $chosen_name, $main_phone, $address, $city, $zip, $birthdate, $birth_address, $gender, $guardian1_name, $guardian1_phone, $guardian1_address, $guardian1_city, $guardian1_zip, $guardian1_work, $guardian1_employer, $guardian2_name, $guardian2_phone, $guardian2_address, $guardian2_city, $guardian2_zip, $guardian2_work, $guardian2_employer, $prev_school1_name, $prev_school1_phone, $prev_school1_email, $prev_school1_address, $prev_school2_name, $prev_school2_phone, $prev_school2_email, $prev_school2_address );
+# set raiseerror to ensure application makes it to the database
+my $dbi_error = '';
+my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw, {RaiseError => 1,});
+try {
+	$dbh->do("INSERT INTO $db_table_applications (first_name, middle_name, last_name, grade, chosen_name, main_phone, address, city, zip, birthdate, birth_address, gender, guardian1_name, guardian1_phone, guardian1_address, guardian1_city, guardian1_zip, guardian1_work, guardian1_employer, guardian2_name, guardian2_phone, guardian2_address, guardian2_city, guardian2_zip, guardian2_work, guardian2_employer, prev_school1_name, prev_school1_phone, prev_school1_email, prev_school1_address, prev_school2_name, prev_school2_phone, prev_school2_email, prev_school2_address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", undef, $first_name, $middle_name, $last_name, $grade, $chosen_name, $main_phone, $address, $city, $zip, $birthdate, $birth_address, $gender, $guardian1_name, $guardian1_phone, $guardian1_address, $guardian1_city, $guardian1_zip, $guardian1_work, $guardian1_employer, $guardian2_name, $guardian2_phone, $guardian2_address, $guardian2_city, $guardian2_zip, $guardian2_work, $guardian2_employer, $prev_school1_name, $prev_school1_phone, $prev_school1_email, $prev_school1_address, $prev_school2_name, $prev_school2_phone, $prev_school2_email, $prev_school2_address );
+}
+catch ($e) {
+	$dbi_error = "caught error: $e";
+}
 
-
-my $html_line = "<p>You have successfully applied.</p>";
+my $html_line = "You have successfully applied.";
+if ($dbi_error ne ''){
+	$html_line = $dbi_error . "\n\n Please go back in your browser and fix the error";
+}
 
 #qq is the same as double quotes: ""
 my $html_template = qq{
-$html_line
+<p>$html_line</p>
 };
 
 print $html_template;
