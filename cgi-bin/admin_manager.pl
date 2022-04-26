@@ -105,6 +105,7 @@ print $html_template;
 
 sub generate_token{
 	my $token;
+	# only use capital letters for now
 	my $min = 65;
 	my $max = 90;
 	my @i = (0..15);

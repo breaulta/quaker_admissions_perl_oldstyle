@@ -12,8 +12,8 @@ $auth_token = CGI::escapeHTML(param('auth_token'));
 $auth_token = uri_unescape( $auth_token );
 
 my $student_id = CGI::escapeHTML(param('student_id'));
-my $fname = CGI::escapeHTML(param('first_name'));
-my $lname = CGI::escapeHTML(param('last_name'));
+#my $fname = CGI::escapeHTML(param('first_name'));
+#my $lname = CGI::escapeHTML(param('last_name'));
 
 my $query;
 my $sth;
@@ -22,30 +22,40 @@ my $db_pw = 'quakeradmin';
 my $db_admiss = 'admissions';
 my $db_table_applications = 'applications';
 my $db_table_session_id = 'Quaker_Session_ID';
+# did we catch an auth token?
 if ( $auth_token ne '' ){
     #check if it matches a session id in the database
     my $dbh = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
     $query = "SELECT session_id FROM $db_table_session_id";
     $sth = $dbh->prepare($query);
     $sth->execute();
-    #if it doesn't match anything, end
     while( my $row = $sth->fetchrow_hashref ){
-        # authenticated using auth token
+        # we've now authenticated using auth token
         if( $auth_token eq $row->{session_id}){
-			my $dbh2 = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-			#my $query = "SELECT student_id, first_name, last_name FROM $db_table_applications";
-			my $q2 = "UPDATE $db_table_applications SET first_name = '$fname', last_name = '$lname' WHERE student_id = $student_id";
+			# might not need this:
+			#my $dbh2 = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
+			my $q2 = "SELECT * FROM $db_table_applications, WHERE student_id='$student_id'";
 			#statement handle object
-			my $sth2 = $dbh->prepare($q2);
-			$sth2->execute();
-			#pass back session id with generated html
+			$sth = $dbh->prepare($q2);
+			#my $sth2 = $dbh->prepare($q2);
+			#$sth2->execute();
+			$sth->execute();
+			# presumably, each key and value is now stored in %row
+			while( my %row = $sth->fetchrow_hashref){
+				# foreach my $key in %row
+				# match key to html row
+				# append value='$row{$key}' so the value will show up in the generated html
+				
+
+
+
+			}
+
 			my $file = 'edit_response.html';
 			print_auth_html($auth_token, $file);
 		}
 	}
 }
-# add auth token to html here programmatically
-#my $auth_token = 'theauthtoken';
 
 
 sub print_auth_html {
