@@ -55,15 +55,9 @@ if( $auth_token ne ''){
 <meta content="utf-8" http-equiv="encoding">
 <body>
 <div id='edit_div' style='display: none;'>
-    <form action='/cgi-bin/edit_applicant.pl' method='post'>
+    <form id='edit_form' action='/cgi-bin/edit_applicant.pl' method='post'>
         <input type="hidden" style="display: none;" id="auth_token" value="$auth_token" name="auth_token">
         <input type='hidden' id='student_id' name='student_id' style=''>
-        <label for='first_name'>First Name:</label>
-        <input type='text' id='first_name' name='first_name'>
-    <br>
-        <label for='last_name'>Last Name:</label>
-        <input type='text' id='last_name' name='last_name'>
-    <br><br>
         <input type='submit' value='Save'>
     </form>
 </div>
@@ -76,11 +70,12 @@ $appslist_html
 </form>
 
 <script>
-function edit_applicant(id, first_name, last_name){
+function edit_applicant(id){
     // we know which applicant to change using the hidden student_id
     document.getElementById('student_id').value = id;
 	document.getElementById('edit_div').style.display = 'inline';
     console.log('edit: ' + id);
+	document.getElementById('edit_form').submit();
 }
 </script>
 </body>
