@@ -33,24 +33,25 @@ if ( $auth_token ne '' ){
         # we've now authenticated using auth token
         if( $auth_token eq $row->{session_id}){
 			# might not need this:
-			#my $dbh2 = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
-			my $q2 = "SELECT * FROM $db_table_applications, WHERE student_id='$student_id'";
+			my $dbh2 = DBI->connect("dbi:mysql:$db_admiss", $db_username, $db_pw);
+			my $q2 = "SELECT * FROM $db_table_applications WHERE student_id='$student_id'";
 			#statement handle object
-			$sth = $dbh->prepare($q2);
-			#my $sth2 = $dbh->prepare($q2);
+			#$sth = $dbh->prepare($q2);
+			my $sth2 = $dbh2->prepare($q2);
 			#$sth2->execute();
-			$sth->execute();
-			# presumably, each key and value is now stored in %row
-			while( my %row = $sth->fetchrow_hashref){
-				# foreach my $key in %row
-				# match key to html row
-				# append value='$row{$key}' so the value will show up in the generated html
-				
-
-
-
+			#$sth->execute();
+			my $html_file = 'app.html';
+			print "Content-type: text/html\n\n";
+			open HTML, "$html_file" or die "I just can't open $html_file";
+			while (my $line = <HTML>) {
+				$sth2->execute() or die "error: $sth2->errstr";
+				while( my $appref = $sth2->fetchrow_hashref){
+					foreach my $key (keys %{ $appref }){
+						$line =~ s/(id=\'$key\') /$1 value=\'$appref->{$key}\'/;
+					}
+				}
+				print $line;
 			}
-
 			my $file = 'edit_response.html';
 			print_auth_html($auth_token, $file);
 		}
@@ -62,7 +63,7 @@ sub print_auth_html {
 	my $auth_t = shift;
 	my $html_file = shift;
 	# we should be in cgi-bin
-    print "Content-type: text/html\n\n";
+    #print "Content-type: text/html\n\n";
     open HTML, "$html_file" or die "I just can't open $html_file";
     while (my $line = <HTML>) {
 		$line =~ s/(id=\"auth_token\") /$1 name=\"auth_token\" value=\"$auth_t\"/;
