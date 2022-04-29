@@ -40,11 +40,20 @@ if ( $auth_token ne '' ){
 			while( my $row = $sth2->fetchrow_hashref ){
 				push(@student_apps, [ $row->{student_id}, $row->{first_name}, $row->{last_name} ]);
 			}
-			my $appslist_html = "<p>first name | last name</p>";
+			#my $appslist_html = "<p>first name | last name</p>";
+			my $appslist_html = qq{
+<tr>
+	<th>First Name</th>
+	<th>Last Name</th>
+	<th>Click to Edit Application</th>
+</tr>
+
+};
 			foreach my $app_row (@student_apps){
-				#$appslist_html .= "<br><p>@$app_row[0] | @$app_row[1]</p>";
-				$appslist_html .= "<p>@$app_row[1] | @$app_row[2] ";
-				$appslist_html .= "<button type='button' id='edit_@$app_row[0]' onclick='edit_applicant(@$app_row[0])'>Edit</button></p>";
+				$appslist_html .= "<tr>";
+				$appslist_html .= "<td>@$app_row[1]</td><td>@$app_row[2]</td>";
+				$appslist_html .= "<td><button type='button' id='edit_@$app_row[0]' onclick='edit_applicant(@$app_row[0])'>Edit</button></td>";
+				$appslist_html .= "</tr>";
 			}
 			print "Content-type: text/html\n\n";
 			print qq{
@@ -52,6 +61,26 @@ if ( $auth_token ne '' ){
 <html>
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
+<style>
+* {
+    font-family: 'Jost',sans-serif;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+</style>
 <body>
 <div id='edit_div' style='display: none;'>
     <form id='edit_form' action='/cgi-bin/edit_applicant.pl' method='post'>
@@ -60,7 +89,9 @@ if ( $auth_token ne '' ){
         <input type='submit' value='Save'>
     </form>
 </div>
+<table>
 $appslist_html
+</table>
 <form id='auth_form' action="/cgi-bin/admin_manager.pl">
   <input type="hidden" style="display: none;" id="auth_token" value="$auth_token" name="auth_token">
   <input type="text" style="display: none;" id="username" name="username" value="dummy">

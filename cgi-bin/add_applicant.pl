@@ -140,6 +140,7 @@ if ($dbi_error ne ''){
 #qq is the same as double quotes: ""
 my $html_template = qq{
 <p>$html_line</p>
+<a href='http://phoenixfriendsschool.org/'>Click to return to the Phoenix Friends School</a>
 };
 
 print $html_template;
