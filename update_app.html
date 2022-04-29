@@ -1,124 +1,261 @@
 <!DOCTYPE HTML>
 <html>
+<head>
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
+<style>
+* {
+	font-family: 'Jost',sans-serif;
+}
+
+#app_div {
+	background-color:#77777745;
+	font-weight: 400;
+	padding: 20px;
+}input[type='text']{
+	border: 0px;
+	height: 30px;
+	width: 100%;
+}
+
+#button {
+	background-color:#91d645;
+	margin: 0px 16px 0px 0px;
+	padding: 14px 12px;
+	border: 0px;
+	width: 100%;
+}
+
+li {
+
+	list-style-type: none;
+}
+
+#row{
+ 	display: flex; 
+	justify-content: flex-start;
+}
+
+#element{
+	padding: 7px;
+	flex-grow: 1;
+}
+
+label {
+	font-size: 15px;
+}
+
+#main_label{
+	text-align: center;
+	font-weight: 700;
+	font-size: 20px;
+}
+
+</style>
+</head>
 <body>
 <h1>Welcome to Phoenix Friend School Admissions</h1>
 <h2>Please fill out the following application:</h2>
 <br>
+<div id='app_div'>
+	<form action='./update_app.pl' method='post'>
+		<input type="hidden" id="auth_token">
+		<div id='student_div'>
+			<label id='main_label'>Student Information</label><br><br>
+			<div id='row'>
+				<div id='element'>
+					<label for='first_name'>First Name</label><br>
+					<input type='text' id='first_name' name='first_name'>
+				</div>
+				<div id='element'>
+					<label for='middle_name'>Middle Name</label><br>
+					<input type='text' id='middle_name' name='middle_name'>
+				</div>
+				<div id='element'>
+					<label for='last_name'>Last Name</label><br>
+					<input type='text' id='last_name' name='last_name'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='chosen_name'>Name Student Uses</label><br>
+					<input type='text' id='chosen_name' name='chosen_name'>
+				</div>
+				<div id='element'>
+					<label for='main_phone'>Contact Phone</label><br>
+					<input type='text' id='main_phone' name='main_phone'>
+				</div>
+				<div id='element'>
+					<label for='gender'>Gender</label><br>
+					<input type='text' id='gender' name='gender'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='address'>Address</label><br>
+					<input type='text' id='address' name='address'>
+				</div>
+				<div id='element'>
+					<label for='city'>City, State</label><br>
+					<input type='text' id='city' name='city'>
+				</div>
+				<div id='element'>
+					<label for='zip'>Zip Code</label><br>
+					<input type='text' id='zip' name='zip'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='birth_address'>Birthplace</label><br>
+					<input type='text' id='birth_address' name='birth_address'>
+				</div>
+				<div id='element'>
+					<label for='birthdate'>Birdthdate</label><br>
+					<input type='date' id='birthdate' name='birthdate'>
+				</div>
+				<div>
+					<label for='grade'>Applying for grade</label><br>
+					<select id='grade' name='grade'>
+						<option value='5'>5</option>
+						<option value='6'>6</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div id='guardian1_div'>
+			<br><br>
+			<label id='main_label'>Guardian Information</label><br><br>
+			<div id='row'>
+				<div id='element'>
+					<label for='guardian1_name'>Name of Guardian</label><br>
+					<input type='text' id='guardian1_name' name='guardian1_name'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_phone'>Contact Phone</label><br>
+					<input type='text' id='guardian1_phone' name='guardian1_phone'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_email'>Contact Email</label><br>
+					<input type='text' id='guardian1_email' name='guardian1_email'>
+				</div>
+			</div>
 
-<form action='./update_app.pl' method='post'>
-	<input type="hidden" id="auth_token">
-	<div id='student_div' style='border-style: solid;'>
-		<label>Student Information:</label><br><br>
-		<input type='hidden' id='student_id'>
-		<label for='first_name'>First Name:</label>
-		<input type='text' id='first_name' name='first_name'>
-		<label for='middle_name'>Middle Name:</label>
-		<input type='text' id='middle_name' name='middle_name'>
-		<label for='last_name'>Last Name:</label>
-		<input type='text' id='last_name' name='last_name'>
-		<br>
-		<label for='grade'>Applying for grade:</label>
-		<select id='grade' name='grade'>
-			<option value='5'>5</option>
-			<option value='6'>6</option>
-		</select>
-		<label for='chosen_name'>Name Student Uses:</label>
-		<input type='text' id='chosen_name' name='chosen_name'>
-		<label for='main_phone'>Contact Phone:</label>
-		<input type='text' id='main_phone' name='main_phone'>
-		<br>
-		<label for='address'>Address:</label>
-		<input type='text' id='address' name='address'>
-		<label for='city'>City:</label>
-		<input type='text' id='city' name='city'>
-		<label for='zip'>Zip Code:</label>
-		<input type='text' id='zip' name='zip'>
+			<div id='row'>
+				<div id='element'>
+					<label for='guardian1_address'>Address</label><br>
+					<input type='text' id='guardian1_address' name='guardian1_address'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_city'>City</label><br>
+					<input type='text' id='guardian1_city' name='guardian1_city'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_zip'>Zip Code</label><br>
+					<input type='text' id='guardian1_zip' name='guardian1_zip'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='guardian1_work'>Guardian Occupation</label><br>
+					<input type='text' id='guardian1_work' name='guardian1_work'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_employer'>Guardian Employer</label><br>
+					<input type='text' id='guardian1_employer' name='guardian1_employer'>
+				</div>
+			</div>
+			<br><br>
+			<div id='row'>
+				<div id='element'>
+					<label for='guardian1_name'>Name of Guardian</label><br>
+					<input type='text' id='guardian1_name' name='guardian1_name'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_phone'>Contact Phone</label><br>
+					<input type='text' id='guardian1_phone' name='guardian1_phone'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_email'>Contact Email</label><br>
+					<input type='text' id='guardian1_email' name='guardian1_email'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='guardian1_address'>Address</label><br>
+					<input type='text' id='guardian1_address' name='guardian1_address'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_city'>City</label><br>
+					<input type='text' id='guardian1_city' name='guardian1_city'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_zip'>Zip Code</label><br>
+					<input type='text' id='guardian1_zip' name='guardian1_zip'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='guardian1_work'>Guardian Occupation</label><br>
+					<input type='text' id='guardian1_work' name='guardian1_work'>
+				</div>
+				<div id='element'>
+					<label for='guardian1_employer'>Guardian Employer</label><br>
+					<input type='text' id='guardian1_employer' name='guardian1_employer'>
+				</div>
+			</div>
+		</div>
+		<br><br>
+		<div id='prev_school_div'>
+			<label id='main_label'>Previous Schools Attended</label><br>
+			<br>
+			<div id='row'>
+				<div id='element'>
+					<label for='prev_school1_name'>Name of School</label><br>
+					<input type='text' id='prev_school1_name' name='prev_school1_name'>
+				</div>
+				<div id='element'>
+					<label for='prev_school1_phone'>Contact Phone</label><br>
+					<input type='text' id='prev_school1_phone' name='prev_school1_phone'>
+				</div>
+				<div id='element'>
+					<label for='prev_school1_email'>Contact Email</label><br>
+					<input type='text' id='prev_school1_email' name='prev_school1_email'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='prev_school1_address'>Full Address</label><br>
+					<input type='text' id='prev_school1_address' name='prev_school1_address'>
+				</div>
+			</div>
+		
+			<br><br>
+			<div id='row'>
+				<div id='element'>
+					<label for='prev_school1_name'>Name of School</label><br>
+					<input type='text' id='prev_school1_name' name='prev_school1_name'>
+				</div>
+				<div id='element'>
+					<label for='prev_school1_phone'>Contact Phone</label><br>
+					<input type='text' id='prev_school1_phone' name='prev_school1_phone'>
+				</div>
+				<div id='element'>
+					<label for='prev_school1_email'>Contact Email</label><br>
+					<input type='text' id='prev_school1_email' name='prev_school1_email'>
+				</div>
+			</div>
+			<div id='row'>
+				<div id='element'>
+					<label for='prev_school1_address'>Full Address</label><br>
+					<input type='text' id='prev_school1_address' name='prev_school1_address'>
+				</div>
+			</div>
 
+		</div>
 		<br>
-		<label for='birthdate'>Birdthdate:</label>
-		<input type='date' id='birthdate' name='birthdate'>
-		<label for='birth_address'>Birthplace:</label>
-		<input type='text' id='birth_address' name='birth_address'>
-		<label for='gender'>Gender:</label>
-		<input type='text' id='gender' name='gender'>
-		<br>
-	</div>
-	<div id='guardian1_div' style='border-style: solid;'>
-		<label for='guardian1_name'>Name of Guardian:</label>
-		<input type='text' id='guardian1_name' name='guardian1_name'>
-		<br>
-		<label for='guardian1_phone'>Contact Phone:</label>
-		<input type='text' id='guardian1_phone' name='guardian1_phone'>
-		<label for='guardian1_email'>Contact Email:</label>
-		<input type='text' id='guardian1_email' name='guardian1_email'>
-		<br>
-		<label for='guardian1_address'>Address:</label>
-		<input type='text' id='guardian1_address' name='guardian1_address'>
-		<label for='guardian1_city'>City:</label>
-		<input type='text' id='guardian1_city' name='guardian1_city'>
-		<label for='guardian1_zip'>Zip Code:</label>
-		<input type='text' id='guardian1_zip' name='guardian1_zip'>
-		<br>
-		<label for='guardian1_work'>Guardian Occupation:</label>
-		<input type='text' id='guardian1_work' name='guardian1_work'>
-		<label for='guardian1_employer'>Guardian Employer:</label>
-		<input type='text' id='guardian1_employer' name='guardian1_employer'>
-		<br>
-	</div>
-	<div id='guardian2_div' style='border-style: solid;'>
-		<label for='guardian2_name'>Name of Guardian:</label>
-		<input type='text' id='guardian2_name' name='guardian2_name'>
-		<br>
-		<label for='guardian2_phone'>Contact Phone:</label>
-		<input type='text' id='guardian2_phone' name='guardian2_phone'>
-		<label for='guardian2_email'>Contact Email:</label>
-		<input type='text' id='guardian2_email' name='guardian2_email'>
-		<br>
-		<label for='guardian2_address'>Address:</label>
-		<input type='text' id='guardian2_address' name='guardian2_address'>
-		<label for='guardian2_city'>City:</label>
-		<input type='text' id='guardian2_city' name='guardian2_city'>
-		<label for='guardian2_zip'>Zip Code:</label>
-		<input type='text' id='guardian2_zip' name='guardian2_zip'>
-		<br>
-		<label for='guardian2_work'>Guardian Occupation:</label>
-		<input type='text' id='guardian2_work' name='guardian2_work'>
-		<label for='guardian2_employer'>Guardian Employer:</label>
-		<input type='text' id='guardian2_employer' name='guardian2_employer'>
-		<br>
-	</div>
-	<div id='prev_school_div' style='border-style: solid;'>
-		<label>Please List Previous Schools Attended:</label>
-		<br>
-		<br>
-		<label for='prev_school1_name'>Name of School:</label>
-		<input type='text' id='prev_school1_name' name='prev_school1_name'>
-		<label for='prev_school1_phone'>Contact Phone:</label>
-		<input type='text' id='prev_school1_phone' name='prev_school1_phone'>
-		<label for='prev_school1_email'>Contact Email:</label>
-		<input type='text' id='prev_school1_email' name='prev_school1_email'>
-		<br>
-		<label for='prev_school1_address'>Full Address:</label>
-		<input type='text' id='prev_school1_address' name='prev_school1_address'>
-		<br>
-		<br>
-		<label for='prev_school2_name'>Name of School:</label>
-		<input type='text' id='prev_school2_name' name='prev_school2_name'>
-		<label for='prev_school2_phone'>Contact Phone:</label>
-		<input type='text' id='prev_school2_phone' name='prev_school2_phone'>
-		<label for='prev_school2_email'>Contact Email:</label>
-		<input type='text' id='prev_school2_email' name='prev_school2_email'>
-		<br>
-		<label for='prev_school2_address'>Full Address:</label>
-		<input type='text' id='prev_school2_address' name='prev_school2_address'>
-		<br>
-
-	</div>
-	<br>
-	<input type='submit' value='Submit'>
-</form>
+		<input id='button' type='submit' value='Submit'>
+	</form>
+</div>
 
 </body>
 <script>
