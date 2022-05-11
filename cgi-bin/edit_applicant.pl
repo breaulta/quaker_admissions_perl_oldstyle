@@ -35,7 +35,7 @@ if ( $auth_token ne '' ){
 			my $q2 = "SELECT * FROM $db_table_applications WHERE student_id='$student_id'";
 			#statement handle object
 			my $sth2 = $dbh2->prepare($q2);
-			my $html_file = 'update_app.html';
+			my $html_file = 'html_files/update_app.html';
 			print "Content-type: text/html\n\n";
 			open HTML, "$html_file" or die "I just can't open $html_file";
 			while (my $line = <HTML>) {
@@ -49,7 +49,7 @@ if ( $auth_token ne '' ){
 				}
 				print $line;
 			}
-			my $file = 'return_admin.html';
+			my $file = 'html_files/return_admin.html';
 			print_auth_html($auth_token, $file);
 		}
 	}

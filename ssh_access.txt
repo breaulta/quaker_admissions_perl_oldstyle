@@ -1,0 +1,12 @@
+to login:
+
+use ip: 68.178.247.221
+
+ssh command:
+ssh -p 22 -i /home/linuxguard/.ssh/id_rsa nq7vtrcie8p8@68.178.247.221
+
+scp command:
+scp index.html nq7vtrcie8p8@68.178.247.221:/home/nq7vtrcie8p8/public_html/test_admissions
+
+
+

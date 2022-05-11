@@ -24,7 +24,7 @@ $username = uri_unescape( $username );
 $password = uri_unescape( $password );
 
 # set admin html file to be generated
-my $file = 'admin.html';
+my $file = 'html_files/admin.html';
 
 # set variables for mySQL connection
 my $db_username = 'test';

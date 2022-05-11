@@ -159,7 +159,7 @@ my $html_line = '';
 if ($dbi_error ne ''){
 	$html_line = $dbi_error . "\n\n Please go back in your browser and fix the error";
 }else{
-	my $file = 'return_admin.html';
+	my $file = 'html_files/return_admin.html';
 	print_auth_html($auth_token, $file);
 }
 

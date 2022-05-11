@@ -60,7 +60,7 @@ print $fh "\npassword: $password";
 print $fh "\ndouble sha: $doublesha";
 close $fh;
 
-my $html_line = "<p>You have successfully applied.</p>";
+my $html_line = "<p>You have successfully added a new admin account.</p>";
 
 #qq is the same as double quotes: ""
 my $html_template = qq{
